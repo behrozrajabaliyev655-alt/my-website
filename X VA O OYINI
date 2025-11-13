@@ -1,0 +1,62 @@
+def print_board(board):
+    for row in board:
+        print(" | ".join(row))
+        print("-" * 9)
+
+def check_winner(board):
+    # Qator bo‘yicha g‘olib
+    for row in board:
+        if row.count(row[0]) == 3 and row[0] != " ":
+            return True
+    # Ustun bo‘yicha g‘olib
+    for col in range(3):
+        if all(board[row][col] == board[0][col] and board[0][col] != " " for row in range(3)):
+            return True
+    # Diagonal bo‘yicha g‘olib
+    if all(board[i][i] == board[0][0] and board[0][0] != " " for i in range(3)) or \
+       all(board[i][2 - i] == board[0][2] and board[0][2] != " " for i in range(3)):
+        return True
+    return False
+
+def tic_tac_toe():
+    board = [[" " for _ in range(3)] for _ in range(3)]
+    current_player = "X"
+    
+    for turn in range(9):
+        print_board(board)
+        
+        while True:
+            try:
+                move = input(f"Player {current_player}, enter your move (row and column, 1-3): ")
+                row, col = map(int, move.split())
+                
+                # Foydalanuvchi 1–3 kiritsa, 0–2 ga o‘zgartirish
+                row -= 1
+                col -= 1
+                
+                if row not in range(3) or col not in range(3):
+                    print("Row va column 1, 2 yoki 3 bo‘lishi kerak.")
+                    continue
+                
+                if board[row][col] != " ":
+                    print("Bu joy band, boshqa joy tanlang.")
+                    continue
+                
+                board[row][col] = current_player
+                break
+            except ValueError:
+                print("Iltimos, ikkita raqam kiriting, masalan: 1 2")
+        
+        if check_winner(board):
+            print_board(board)
+            print(f"Player {current_player} wins!")
+            return
+        
+        current_player = "O" if current_player == "X" else "X"
+    
+    print_board(board)
+    print("It's a draw!")
+
+if __name__ == "__main__":
+    tic_tac_toe()
+
