@@ -1,0 +1,23 @@
+def calculator():
+    print("Welcome to the Smart Calculator!")
+    print("You can enter expressions like 2+2, 5*3, 10/2, 7-4")
+    print("Type 'exit' to quit.\n")
+
+    while True:
+        expr = input("Enter your expression: ")
+        
+        if expr.lower() == "exit":
+            print("Goodbye!")
+            break
+        
+        try:
+            # eval() yordamida ifodani hisoblash
+            result = eval(expr)
+            print(f"Result: {result}\n")
+        except ZeroDivisionError:
+            print("Error: 0 ga bo‘lish mumkin emas!\n")
+        except Exception:
+            print("Iltimos, to‘g‘ri arifmetik ifoda kiriting (masalan: 2+2)\n")
+
+if __name__ == "__main__":
+    calculator()
